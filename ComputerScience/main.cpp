@@ -2,6 +2,7 @@
 #include "framework.h"
 #include "SortAlgorithms.h"
 #include "SearchAlgorithm.h"
+#include "CompressionAlgo.h"
 #include <iostream>
 #include <time.h>
 
@@ -60,5 +61,11 @@ int main()
 	std::clock_t fibEnd = std::clock();
 	std::cout << "FibSearch returned "   << resFib   << " in : " << std::to_string(((double)fibEnd - fibStart) / CLOCKS_PER_SEC) << " seconds \n";
 
+
+	std::vector<char> aa = COmpressionAlgo::Huffman("Alors, ça écrit un truc dans la mémoire, est-ce que c'est le bon truc je sais pas mais en tout cas CA ECRIT !!!!");
+	COmpressionAlgo::CompressFile(aa, "Huff.bin");
+
+	for (char c : aa)
+		std::cout << std::to_string(c);
 	return 1;
 }

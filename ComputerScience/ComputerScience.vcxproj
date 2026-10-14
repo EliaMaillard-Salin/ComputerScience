@@ -123,11 +123,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CompressionAlgo.h" />
     <ClInclude Include="SearchAlgorithm.h" />
     <ClInclude Include="SortAlgorithms.h" />
     <ClInclude Include="framework.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CompressionAlgo.cpp" />
     <ClCompile Include="SearchAlgorithm.cpp" />
     <ClCompile Include="SortAlgorithms.cpp" />
     <ClCompile Include="framework.cpp" />
