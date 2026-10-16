@@ -52,7 +52,7 @@ int SortAlgorithms::InsertionSort(std::vector<int>& toSort)
         {
             if (toSort[currentChecked] > toSort[currentChecked + 1])
             {
-                //Utils::Swap(toSort, currentChecked, currentChecked + directionCheck);
+                Utils::Swap(toSort, currentChecked, currentChecked + directionCheck);
                 furtherIndex = currentChecked+directionCheck;
                 directionCheck = -1;
             }
@@ -74,7 +74,7 @@ int SortAlgorithms::InsertionSort(std::vector<int>& toSort)
             }
             if (toSort[currentChecked] < toSort[currentChecked - 1])
             {
-                //Utils::Swap(toSort, currentChecked, currentChecked - 1);
+                Utils::Swap(toSort, currentChecked, currentChecked - 1);
                 currentChecked--;
             }
         }
@@ -176,62 +176,21 @@ int SortAlgorithms::QuickSort(std::vector<int>& toSort, int first, int last)
     return steps;
 }
 
-int SortAlgorithms::HeapSort(int* toSort, int arraySize)
+int SortAlgorithms::HeapSort(std::vector<int> table)
 {
     int steps = 0;
-    BinaryNodeTree* pRoot = Utils::ConstructTreeFromList(toSort, arraySize);
+    TreeNode* pRoot = Utils::ConstructTreeFromList(table);
     int furtherPos = -1;
-    BinaryNodeTree* furthestNode = pRoot;
-    int lastIndex = arraySize - 1;
+    int lastIndex = table.size() - 1;
     
     while (lastIndex >= 0)
     {
         furtherPos = -1;
-        steps += InHeapSort(pRoot,furthestNode,furtherPos);
+        steps += pRoot->SortNode();
 
-        toSort[lastIndex--] = pRoot->value;
-        pRoot->value = furthestNode->value;
-
-        if (furtherPos == 1)
-            furthestNode->root->left = nullptr;
-        else if (furtherPos == 0)
-            furthestNode->root->right = nullptr;
-        if (furtherPos != -1)
-            delete furthestNode;
+        table[lastIndex--] = pRoot->value;
+        pRoot->value = TreeNode::LastLeaf->value;
+        delete TreeNode::LastLeaf;
     }
-    return steps;
-}
-
-int SortAlgorithms::InHeapSort(BinaryNodeTree* toSort, BinaryNodeTree*& furthest, int& furthestSide)
-{
-    int steps = 0;
-    if (toSort->right != nullptr && (toSort->right->right == nullptr && toSort->right->left == nullptr))
-    {
-        furthest = toSort->right;
-        furthestSide = 0;
-    }
-    if (toSort->left != nullptr && (toSort->left->right == nullptr && toSort->left->left == nullptr))
-    {
-        furthest = toSort->left;
-        furthestSide = 1;
-    }
-
-    if (toSort->right != nullptr && (toSort->right->right != nullptr || toSort->right->left != nullptr))
-        steps += InHeapSort(toSort->right,furthest, furthestSide);
-    if (toSort->left != nullptr && (toSort->left->right != nullptr || toSort->left->left != nullptr))
-        steps += InHeapSort(toSort->left, furthest, furthestSide);
-
-    if (toSort->right != nullptr && toSort->value < toSort->right->value)
-    {
-        Utils::SwapValuesInTree(toSort, toSort->right);
-        steps++;
-    }
-    if (toSort->left != nullptr &&  toSort->value < toSort->left->value)
-    {
-        Utils::SwapValuesInTree(toSort, toSort->left);
-        steps++;
-    }
-
-
     return steps;
 }

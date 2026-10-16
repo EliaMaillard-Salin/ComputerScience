@@ -10,7 +10,6 @@ namespace SortAlgorithms
 	int InsertionSort(std::vector<int>& toSort);
 	int MergeSort(std::vector<int>& toSort);
 	int QuickSort(std::vector<int>& toSort, int first = 0, int last = -1);
-	int HeapSort(int* toSort,int arraySize);
-	int InHeapSort(BinaryNodeTree* toSort, BinaryNodeTree*& furthest, int& furthestSide);
+	int HeapSort(std::vector<int> table);
 };
 

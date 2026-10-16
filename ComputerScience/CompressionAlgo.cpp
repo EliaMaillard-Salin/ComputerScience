@@ -11,22 +11,22 @@ std::vector<char> COmpressionAlgo::Huffman(std::string toCompress)
     {
         occurences[c] += 1;
     }
-    std::list<BinaryNodeTree*> unlinkedNodeTree = {};
-    std::map<char, BinaryNodeTree*> binaryTreeAssociated = {};
+    std::list<TreeNode*> unlinkedNodeTree = {};
+    std::map<char, TreeNode*> binaryTreeAssociated = {};
     for (auto it : occurences)
     {
-        BinaryNodeTree* node = new BinaryNodeTree();
+        TreeNode* node = new TreeNode(true);
         node->value = it.second;
         node->name = it.first;
         unlinkedNodeTree.push_back(node);
         binaryTreeAssociated[it.first] = node;
     }
-    BinaryNodeTree* pRoot = nullptr;
+    TreeNode* pRoot = nullptr;
     while(!unlinkedNodeTree.empty())
     {
-        BinaryNodeTree* pFirstNode = nullptr;
-        BinaryNodeTree* pSecondNode = nullptr;
-        for (BinaryNodeTree* pNode : unlinkedNodeTree)
+        TreeNode* pFirstNode = nullptr;
+        TreeNode* pSecondNode = nullptr;
+        for (TreeNode* pNode : unlinkedNodeTree)
         {
             if (pFirstNode == nullptr)
             {
@@ -57,10 +57,11 @@ std::vector<char> COmpressionAlgo::Huffman(std::string toCompress)
             continue;
         }
 
-        BinaryNodeTree* newRoot = new BinaryNodeTree();
+        TreeNode* newRoot = new TreeNode(true);
         newRoot->value = pFirstNode->value + pSecondNode->value;
-        newRoot->left = pFirstNode; newRoot->right = pSecondNode;
-        pFirstNode->root = newRoot; pSecondNode->root = newRoot;
+        newRoot->left = pFirstNode; pFirstNode->onLeft = true;
+        newRoot->right = pSecondNode; pSecondNode->onLeft = false;
+        pFirstNode->pParent = newRoot; pSecondNode->pParent = newRoot;
         unlinkedNodeTree.remove(pFirstNode); unlinkedNodeTree.remove(pSecondNode);
         unlinkedNodeTree.push_back(newRoot);
     }
@@ -69,11 +70,11 @@ std::vector<char> COmpressionAlgo::Huffman(std::string toCompress)
     {
         int offset = 1;
         std::list<char> cValue = {};
-        BinaryNodeTree* pN = binaryTreeAssociated[c];
+        TreeNode* pN = binaryTreeAssociated[c];
 
         while(pN != pRoot)
         {
-            BinaryNodeTree* pParent = pN->root;
+            TreeNode* pParent = pN->pParent;
             cValue.push_front((pN == pParent->left ? 0 : 1));
             offset *= 2;
             pN = pParent;

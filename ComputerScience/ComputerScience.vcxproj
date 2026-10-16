@@ -123,17 +123,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BenchMark.h" />
     <ClInclude Include="CompressionAlgo.h" />
     <ClInclude Include="SearchAlgorithm.h" />
     <ClInclude Include="SortAlgorithms.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="TreeNode.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BenchMark.cpp" />
     <ClCompile Include="CompressionAlgo.cpp" />
     <ClCompile Include="SearchAlgorithm.cpp" />
     <ClCompile Include="SortAlgorithms.cpp" />
     <ClCompile Include="framework.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TreeNode.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,15 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-
-struct BinaryNodeTree
-{
-	int value;
-	BinaryNodeTree* left = nullptr;
-	BinaryNodeTree* right = nullptr;
-	BinaryNodeTree* root = nullptr;
-	std::string name = "";
-};
+#include "TreeNode.h"
 
 namespace Utils
 {
@@ -18,9 +10,9 @@ namespace Utils
 	std::vector<int> CreateSortedAscendingList(int listSize);
 	std::vector<int> CreateSortedDescendingList(int listSize);
 
-	BinaryNodeTree* ConstructTreeFromList(int* table, int listSize);
-	void SwapValuesInTree(BinaryNodeTree* value1, BinaryNodeTree* value2);
+	TreeNode* ConstructTreeFromList(std::vector<int> table);
+	void SwapValuesInTree(TreeNode* value1, TreeNode* value2);
 	void PrintTable(std::vector<int> table);
-	void PrintBinaryTree(BinaryNodeTree* tree);
-	void PrintNodeTree(BinaryNodeTree* node);
+	void PrintBinaryTree(TreeNode* tree);
+	void PrintNodeTree(TreeNode* node);
 }

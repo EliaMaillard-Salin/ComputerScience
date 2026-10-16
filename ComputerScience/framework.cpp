@@ -40,21 +40,21 @@ std::vector<int> Utils::CreateSortedDescendingList(int listSize)
 	return newVec;
 }
 
-BinaryNodeTree* Utils::ConstructTreeFromList(int* table, int listSize)
+TreeNode* Utils::ConstructTreeFromList(std::vector<int> table)
 {
-	BinaryNodeTree* root = new BinaryNodeTree();
+	TreeNode* root = new TreeNode(true);
 	
-	for (int i = 0; i < listSize; i++)
+	for (int i = 0; i < table.size(); i++)
 	{
-		BinaryNodeTree* currentNode = root;
+		TreeNode* currentNode = root;
 		if (i == 0) {
 			currentNode->value = table[0];
-			currentNode->root = nullptr;
+			currentNode->pParent = nullptr;
 			currentNode->name = "Root";
 			continue;
 		}
 
-		std::queue<BinaryNodeTree*> nextNodes = {};
+		std::queue<TreeNode*> nextNodes = {};
 		nextNodes.push(currentNode);
 
 		while (!nextNodes.empty()) {
@@ -62,8 +62,8 @@ BinaryNodeTree* Utils::ConstructTreeFromList(int* table, int listSize)
 			nextNodes.pop();
 
 			if (currentNode->left == nullptr) {
-				currentNode->left = new BinaryNodeTree();
-				currentNode->left->root = currentNode;
+				currentNode->left = new TreeNode(true);
+				currentNode->left->pParent = currentNode;
 				currentNode->left->value = table[i];
 				currentNode->left->name = std::to_string(i);
 				break;
@@ -73,8 +73,8 @@ BinaryNodeTree* Utils::ConstructTreeFromList(int* table, int listSize)
 			}
 
 			if (currentNode->right == nullptr) {
-				currentNode->right = new BinaryNodeTree();
-				currentNode->right->root = currentNode;
+				currentNode->right = new TreeNode(false);
+				currentNode->right->pParent = currentNode;
 				currentNode->right->value = table[i];
 				currentNode->right->name = std::to_string(i);
 				break;
@@ -87,7 +87,7 @@ BinaryNodeTree* Utils::ConstructTreeFromList(int* table, int listSize)
 	return root;
 }
 
-void Utils::SwapValuesInTree(BinaryNodeTree* value1, BinaryNodeTree* value2)
+void Utils::SwapValuesInTree(TreeNode* value1, TreeNode* value2)
 {
 	int a = value1->value;
 	value1->value = value2->value;
@@ -107,11 +107,11 @@ void Utils::PrintTable(std::vector<int> table)
 	std::cout << "]\n";
 }
 
-void Utils::PrintBinaryTree(BinaryNodeTree* tree)
+void Utils::PrintBinaryTree(TreeNode* tree)
 {
-	BinaryNodeTree* currentNode = tree;
+	TreeNode* currentNode = tree;
 
-	std::queue<BinaryNodeTree*> nextNodes = {};
+	std::queue<TreeNode*> nextNodes = {};
 	nextNodes.push(currentNode);
 	std::cout << "Tree :\n";
 	std::cout << "[";
@@ -121,8 +121,8 @@ void Utils::PrintBinaryTree(BinaryNodeTree* tree)
 		currentNode = nextNodes.front();
 		nextNodes.pop();
 		std::string parentStr = "Parent :";
-		if (currentNode->root != nullptr)
-			parentStr += currentNode->root->name;
+		if (currentNode->pParent != nullptr)
+			parentStr += currentNode->pParent->name;
 		std::cout << "(Node:" + currentNode->name <<", " << parentStr << ", " << currentNode->value << ")";
 
 		count++;
@@ -160,7 +160,7 @@ void Utils::PrintBinaryTree(BinaryNodeTree* tree)
 	std::cout << "]\n";
 }
 
-void Utils::PrintNodeTree(BinaryNodeTree* node)
+void Utils::PrintNodeTree(TreeNode* node)
 {
 	if (node->left != nullptr)
 		PrintNodeTree(node->left);
