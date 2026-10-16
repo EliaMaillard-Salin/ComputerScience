@@ -1,5 +1,6 @@
 
 #include "BenchMark.h"
+#include <iostream>
 
 int main()
 {
@@ -9,6 +10,8 @@ int main()
 	benchmark.LaunchSortingAlgo(100,BenchMark::ListState::ASCENDING_SORTED);
 	benchmark.LaunchSortingAlgo(100,BenchMark::ListState::DESCENDING_SORTED);
 	benchmark.LaunchSortingAlgo(100,BenchMark::ListState::RANDOM);
+
+	std::cout << "---------------------- SARCHING"
 
 	benchmark.LaunchSearchingAlgo(100,98);
 	benchmark.LaunchSearchingAlgo(100,98);

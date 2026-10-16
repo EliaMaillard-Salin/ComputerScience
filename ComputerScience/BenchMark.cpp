@@ -33,11 +33,11 @@ std::vector<int> BenchMark::LaunchSortingAlgo(int size, ListState state)
 	std::clock_t InsertionEnd = std::clock();
 	std::cout << "InsertionSort returned " << resInsertion << " in : " << std::to_string(((double)InsertionEnd - InsertionStart) / CLOCKS_PER_SEC) << " seconds \n";
 
-	toSortTable = CreateTable(state, size);
-	std::clock_t QuickStart = std::clock();
-	int resQuick = SortAlgorithms::QuickSort(toSortTable);
-	std::clock_t QuickEnd = std::clock();
-	std::cout << "QuickSort returned " << resQuick << " in : " << std::to_string(((double)QuickEnd - QuickStart) / CLOCKS_PER_SEC) << " seconds \n";
+	//toSortTable = CreateTable(state, size);
+	//std::clock_t QuickStart = std::clock();
+	//int resQuick = SortAlgorithms::QuickSort(toSortTable);
+	//std::clock_t QuickEnd = std::clock();
+	//std::cout << "QuickSort returned " << resQuick << " in : " << std::to_string(((double)QuickEnd - QuickStart) / CLOCKS_PER_SEC) << " seconds \n";
 
 	toSortTable = CreateTable(state, size);
 	std::clock_t MergeStart = std::clock();
