@@ -43,45 +43,46 @@ std::vector<int> Utils::CreateSortedDescendingList(int listSize)
 TreeNode* Utils::ConstructTreeFromList(std::vector<int> table)
 {
 	TreeNode* root = new TreeNode(true);
-	
-	for (int i = 0; i < table.size(); i++)
+	std::queue<TreeNode*> nextNodes = {};
+	for (int i = 0;i < table.size();)
 	{
 		TreeNode* currentNode = root;
 		if (i == 0) {
 			currentNode->value = table[0];
 			currentNode->pParent = nullptr;
 			currentNode->name = "Root";
+			i++;
 			continue;
 		}
 
-		std::queue<TreeNode*> nextNodes = {};
 		nextNodes.push(currentNode);
 
-		while (!nextNodes.empty()) {
-			currentNode = nextNodes.front();
-			nextNodes.pop();
+		currentNode = nextNodes.front();
+		nextNodes.pop();
 
-			if (currentNode->left == nullptr) {
-				currentNode->left = new TreeNode(true);
-				currentNode->left->pParent = currentNode;
-				currentNode->left->value = table[i];
-				currentNode->left->name = std::to_string(i);
-				break;
-			}
-			else {
-				nextNodes.push(currentNode->left);
-			}
+		if (currentNode->left == nullptr) {
+			currentNode->left = new TreeNode(true);
+			currentNode->left->pParent = currentNode;
+			currentNode->left->name = std::to_string(i);
+			currentNode->left->value = table[i++];
+			nextNodes.push(currentNode->left);
+		}
+		else {
+			nextNodes.push(currentNode->left);
+		}
 
-			if (currentNode->right == nullptr) {
-				currentNode->right = new TreeNode(false);
-				currentNode->right->pParent = currentNode;
-				currentNode->right->value = table[i];
-				currentNode->right->name = std::to_string(i);
-				break;
-			}
-			else {
-				nextNodes.push(currentNode->right);
-			}
+		if (i >= table.size())
+			break;
+
+		if (currentNode->right == nullptr) {
+			currentNode->right = new TreeNode(false);
+			currentNode->right->pParent = currentNode;
+			currentNode->right->name = std::to_string(i);
+			currentNode->right->value = table[i++];
+			nextNodes.push(currentNode->left);
+		}
+		else {
+			nextNodes.push(currentNode->right);
 		}
 	}
 	return root;
